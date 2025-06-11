@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Na Paata Gramam - Scene 1</title>
+    <title>My grandparents village</title>
     <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
-    <script src="https://cdn.rawgit.com/jeromeetienne/ar.js/2.0.0/aframe/build/aframe-ar.min.js"></script>
+    <!-- <script src="https://cdn.rawgit.com/jeromeetienne/ar.js/2.0.0/aframe/build/aframe-ar.min.js"></script> -->
+
   </head>
   <button onclick="startMusic()" style="position: absolute; top: 10px; left: 10px; z-index: 999;">Start Scene</button>
   <body>
-    <a-scene embedded arjs="sourceType: webcam;" style="position: absolute; top: 60px; left: 0; right: 0; bottom: 0;">
+    <a-scene>
       <!-- AUDIO -->
       <a-assets>
         <audio id="villageAmb" src="assets/audio/village_ambience.mp3"></audio>
@@ -22,13 +23,20 @@
         <a-asset-item id="palm-obj" src="assets/Palm_Tree/10446_Palm_Tree_v1_L3.123c0a37e64c-4659-4136-a23d-059cbcde3ecd/10446_Palm_Tree_v1_max2010_iteration-2.obj"></a-asset-item>
         <a-asset-item id="palm-mtl" src="assets/Palm_Tree/10446_Palm_Tree_v1_L3.123c0a37e64c-4659-4136-a23d-059cbcde3ecd/10446_Palm_Tree_v1_max2010_iteration-2.mtl"></a-asset-item>
         <a-asset-item id="kiteModel" src="assets/kite_festival.glb"></a-asset-item>
-                <a-asset-item id="pinwheelModel" src="assets/pinwheel.glb"></a-asset-item>
+        <a-asset-item id="pinwheelModel" src="assets/pinwheel.glb"></a-asset-item>
 
       </a-assets>
 
       <!-- SOUND ENTITIES -->
       <a-entity id="ambience" sound="src: #villageAmb; autoplay: true; loop: true; volume: 0.8"></a-entity>
       <a-entity id="flute" sound="src: #fluteLoop; autoplay: true; loop: true; volume: 0.2"></a-entity>
+
+      <!-- TEXT BACKGROUND -->
+      <a-plane id="interaction-text-bg" position="0 2 -2" width="4" height="0.7" color="#fff" opacity="0.7" visible="false"></a-plane>
+
+      <!-- INTERACTION TEXT -->
+      <a-text id="interaction-text" value="" position="0 2 -2.01" color="#000" visible="false" width="6"></a-text>
+
 
       <!-- SKY & GROUND -->
       <a-sky color="#cceeff"></a-sky>
@@ -48,11 +56,19 @@
 
       <!-- TEMPLE -->
       <a-plane src="#templeImg"
-           position="6 1.5 -3"
-           width="3"
-           height="2"
-           rotation="0 -20 0">
+         position="6 1.5 -3"
+         width="3"
+         height="2"
+         rotation="0 -20 0">
       </a-plane>
+
+      <!-- CLICKABLE INVISIBLE BOX -->
+      <a-box id="temple-click" class="clickable"
+            position="6 1.5 -3"
+            width="3" height="2" depth="0.1"
+            rotation="0 -20 0"
+            opacity="0.001" color="#fff">
+      </a-box>
 
       <!-- KITES FESTIVAL -->
       <a-entity gltf-model="#kiteModel"
@@ -66,20 +82,32 @@
       <a-cylinder position="-3 1 -5" radius="0.3" height="2" color="#8B4513"></a-cylinder>
       <a-sphere position="-3 2.5 -5" radius="1.2" color="#228B22"></a-sphere>
 
-      <a-entity id="swing-group" class="clickable"
-                position="-3 2.0 -4.3"
-                animation="property: rotation; from: -10 0 0; to: 10 0 0; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"
-                sound="src: #swingCreak; on: click">
-        <a-cylinder position="-0.15 0 0" radius="0.02" height="2.2" color="#d2b48c"></a-cylinder>
-        <a-cylinder position="0.15 0 0" radius="0.02" height="2.2" color="#d2b48c"></a-cylinder>
-        <a-box position="0 -1.1 0" width="0.6" height="0.05" depth="0.3" color="#654321"></a-box>
-        <a-cylinder position="0 -0.85 0" radius="0.08" height="0.3" color="#f08080"></a-cylinder>
-        <a-sphere position="0 -0.6 0" radius="0.09" color="#ffdbac"></a-sphere>
-        <a-cylinder position="-0.05 -1.03 0.05" radius="0.02" height="0.2" color="#1e90ff" rotation="90 0 0"></a-cylinder>
-        <a-cylinder position="0.05 -1.05 0.05" radius="0.02" height="0.2" color="#1e90ff" rotation="90 0 0"></a-cylinder>
-        <a-cylinder position="-0.12 -0.7 0" radius="0.015" height="0.25" rotation="0 0 45" color="#ffdbac"></a-cylinder>
-        <a-cylinder position="0.12 -0.7 0" radius="0.015" height="0.25" rotation="0 0 -45" color="#ffdbac"></a-cylinder>
-      </a-entity>
+     <a-entity id="swing-group" class="clickable"
+          position="-3 2.0 -4.3"
+          animation="property: rotation; from: -10 0 0; to: 10 0 0; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"
+          sound="src: #swingCreak; on: click">
+
+      <!-- ropes -->
+      <a-cylinder position="-0.15 0 0" radius="0.02" height="2.2" color="#d2b48c"></a-cylinder>
+      <a-cylinder position="0.15 0 0" radius="0.02" height="2.2" color="#d2b48c"></a-cylinder>
+
+      <!-- swing seat -->
+      <a-box position="0 -1.1 0" width="0.6" height="0.05" depth="0.3" color="#654321"></a-box>
+
+      <!-- kid -->
+      <a-cylinder position="0 -0.85 0" radius="0.08" height="0.3" color="#f08080"></a-cylinder>
+      <a-sphere position="0 -0.6 0" radius="0.09" color="#ffdbac"></a-sphere>
+      <a-cylinder position="-0.05 -1.03 0.05" radius="0.02" height="0.2" color="#1e90ff" rotation="90 0 0"></a-cylinder>
+      <a-cylinder position="0.05 -1.05 0.05" radius="0.02" height="0.2" color="#1e90ff" rotation="90 0 0"></a-cylinder>
+      <a-cylinder position="-0.12 -0.7 0" radius="0.015" height="0.25" rotation="0 0 45" color="#ffdbac"></a-cylinder>
+      <a-cylinder position="0.12 -0.7 0" radius="0.015" height="0.25" rotation="0 0 -45" color="#ffdbac"></a-cylinder>
+
+      <!-- INVISIBLE CLICKABLE BOX -->
+      <a-box position="0 -0.5 0" width="0.8" height="1.8" depth="0.4"
+            opacity="0.001" color="#fff" class="clickable">
+      </a-box>
+    </a-entity>
+
 
       <!-- DOG -->
       <a-obj-model src="#dog-obj" mtl="#dog-mtl"
@@ -96,7 +124,17 @@
         <a-cylinder radius="0.02" height="0.3" color="#ffdbac" position="0.15 0.7 0" rotation="0 0 -45"></a-cylinder>
         <a-cylinder radius="0.025" height="0.3" color="#1e90ff" position="-0.05 0.15 0"></a-cylinder>
         <a-cylinder radius="0.025" height="0.3" color="#1e90ff" position="0.05 0.15 0"></a-cylinder>
-        <a-entity gltf-model="#pinwheelModel" position="-0.20 0.7 0" scale="1.5 1.5 1.5" rotation="0 0 0"></a-entity>
+        <a-entity id="pinwheel" gltf-model="#pinwheelModel"
+          position="-0.20 0.7 0"
+          scale="1.5 1.5 1.5"
+          rotation="0 0 0"
+          class="clickable">
+        </a-entity>
+
+        <!-- CLICKABLE INVISIBLE BOX -->
+        <a-box position="-0.2 0.7 0" width="0.4" height="0.4" depth="0.1"
+              opacity="0.001" color="#fff" class="clickable">
+        </a-box>
       </a-entity>
 
       <!-- GRASS MODEL -->
@@ -147,19 +185,7 @@
 
       <!-- LIGHTING -->
       <a-entity light="type: ambient; intensity: 0.6"></a-entity>
-      <a-entity light="type: directional; intensity: 0.8" position="1 3 1"></a-entity>
-
-      <!-- INTERACTION SCRIPT -->
-      <script>
-        const swing = document.querySelector('#swing-group');
-        const text = document.querySelector('#swing-text');
-
-        swing.addEventListener('click', () => {
-          text.setAttribute('visible', 'true');
-        });
-      </script>
-
-      <!-- SCENE 2: KIDS PLAYING HIDE AND SEEK -->
+      <a-entity light="type: directional; intensity: 0.8" position="1 3 1"></a-entity>        
 
       <!-- Group of kids running around -->
       <a-entity position="0 0 4">
@@ -186,23 +212,64 @@
           <a-box width="0.15" height="0.15" depth="0.1" color="#9370db" position="0 0.6 0"></a-box>
           <a-sphere radius="0.1" color="#ffdbac" position="0 0.8 0"></a-sphere>
         </a-entity>
-      </a-entity>  
-      
-      <script>
-        function startMusic() {
-          const villageAmb = document.querySelector('#ambience');
-          const flute = document.querySelector('#flute');
-          villageAmb.components.sound.playSound();
-          flute.components.sound.playSound();
+      </a-entity>     
+    </a-scene>   
+    
+
+    <script>
+      window.addEventListener('DOMContentLoaded', () => {
+        function showText(message) {
+          const text = document.querySelector('#interaction-text');
+          const bg = document.querySelector('#interaction-text-bg');
+          text.setAttribute('value', message);
+          text.setAttribute('visible', true);
+          bg.setAttribute('visible', true);
+          setTimeout(() => {
+            text.setAttribute('visible', false);
+            bg.setAttribute('visible', false);
+          }, 4000);
         }
 
-        const bg = document.querySelector('#text-bg');
-        swing.addEventListener('click', () => {
-          text.setAttribute('visible', 'true');
-          bg.setAttribute('visible', 'true');
-        });
+        const swing = document.querySelector('#swing-group');
+        const temple = document.querySelector('#temple-click');
+        const pinwheel = document.querySelector('#pinwheel');
 
-       </script>    
-    </a-scene>    
+        // Attach interactions
+        if (swing) {
+          swing.addEventListener('click', () => {
+            showText("Every evening, this swing carried our laughter into the sky.");
+            swing.components.sound?.playSound?.();
+          });
+        }
+
+        if (temple) {
+          temple.addEventListener('click', () => {
+            showText("Festival bells ring in my memories!");
+          });
+        }
+
+        if (pinwheel) {
+          pinwheel.addEventListener('click', () => {
+            showText("Wheee! The pinwheel spins like our childhood days!");
+            pinwheel.setAttribute('animation', {
+              property: 'rotation',
+              to: '0 360 0',
+              dur: 1000,
+              loop: true,
+              easing: 'linear'
+            });
+          });
+        }
+      });
+
+      // Move this function outside <a-scene> and inside global scope
+      function startMusic() {
+        const villageAmb = document.querySelector('#ambience');
+        const flute = document.querySelector('#flute');
+        villageAmb?.components.sound?.playSound?.();
+        flute?.components.sound?.playSound?.();
+      }
+    </script>
+ 
   </body>
 </html>
