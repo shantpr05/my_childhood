@@ -13,7 +13,12 @@
       <a-assets>
         <audio id="villageAmb" src="assets/audio/village_ambience.mp3"></audio>
         <audio id="fluteLoop" src="assets/audio/indian_flute_loop.mp3"></audio>
-        <audio id="swingCreak" src="assets/audio/swing_creak.mp3"></audio>
+        <audio id="swingCreak" src="assets/audio/swing-squeak-73201.mp3"></audio>
+        <audio id="templeBell" src="assets/audio/indian-temple-bell-68150.mp3"></audio>
+        <audio id="dogBark" src="assets/audio/dog-barking-70772.mp3"></audio>
+        <audio id="kidsLaugh" src="assets/audio/kids-laughing-jam-fx-1-00-05.mp3"></audio>
+
+
 
         <a-asset-item id="birdModel" src="assets/birds.glb"></a-asset-item>
         <img id="templeImg" src="assets/temple.png">
@@ -30,12 +35,17 @@
       <!-- SOUND ENTITIES -->
       <a-entity id="ambience" sound="src: #villageAmb; autoplay: true; loop: true; volume: 0.8"></a-entity>
       <a-entity id="flute" sound="src: #fluteLoop; autoplay: true; loop: true; volume: 0.2"></a-entity>
+      <a-entity id="temple-bell-sound" sound="src: #templeBell; autoplay: false; volume: 1.0"></a-entity>
+      <a-entity id="dog-sound" sound="src: #dogBark; autoplay: false; volume: 1.0"></a-entity>
+      <a-entity id="kids-laugh-audio" sound="src: #kidsLaugh; autoplay: false; volume: 0.3"></a-entity>
+
+
 
       <!-- TEXT BACKGROUND -->
       <a-plane id="interaction-text-bg" position="0 2 -2" width="4" height="0.7" color="#fff" opacity="0.7" visible="false"></a-plane>
 
       <!-- INTERACTION TEXT -->
-      <a-text id="interaction-text" value="" position="0 2 -2.01" color="#000" visible="false" width="6"></a-text>
+      <a-text id="interaction-text" value="" position="0 2 -1.99" align="center" color="#111" width="4" wrap-count="40" font="mozillavr" color="#000" visible="false" width="6"></a-text>
 
 
       <!-- SKY & GROUND -->
@@ -110,10 +120,12 @@
 
 
       <!-- DOG -->
-      <a-obj-model src="#dog-obj" mtl="#dog-mtl"
+      <a-obj-model id="dog" class="clickable"
+             src="#dog-obj" mtl="#dog-mtl"
              position="-2.5 0 -4.9"
              scale="0.02 0.02 0.02"
-             rotation="-90 0 0">
+             rotation="-90 0 0"
+             animation="property: rotation; from: -90 0 0; to: -90 10 0; dir: alternate; dur: 1000; loop: true; easing: easeInOutSine">
       </a-obj-model>
 
       <!-- STANDING KID NEAR SWING -->
@@ -212,7 +224,8 @@
           <a-box width="0.15" height="0.15" depth="0.1" color="#9370db" position="0 0.6 0"></a-box>
           <a-sphere radius="0.1" color="#ffdbac" position="0 0.8 0"></a-sphere>
         </a-entity>
-      </a-entity>     
+      </a-entity>  
+      <a-entity id="kids-laugh-audio" sound="src: #kidsLaugh; autoplay: false; volume: 1.0" position="0 1 4"></a-entity>   
     </a-scene>   
     
 
@@ -232,8 +245,10 @@
 
         const swing = document.querySelector('#swing-group');
         const temple = document.querySelector('#temple-click');
+        const templeBell = document.querySelector('#temple-bell-sound');
         const pinwheel = document.querySelector('#pinwheel');
-
+        const dog = document.querySelector('#dog');
+        const dogSound = document.querySelector('#dog-sound');
         // Attach interactions
         if (swing) {
           swing.addEventListener('click', () => {
@@ -245,6 +260,7 @@
         if (temple) {
           temple.addEventListener('click', () => {
             showText("Festival bells ring in my memories!");
+            templeBell.components.sound.playSound();
           });
         }
 
@@ -260,8 +276,34 @@
             });
           });
         }
+
+       if (dog) {
+          dog.addEventListener('click', () => {
+            showText("Bujji always barked at strangers!");
+            dogSound.components.sound.playSound();
+          });
+        }
       });
 
+      window.addEventListener('DOMContentLoaded', () => {
+        const laughSound = document.querySelector('#kids-laugh-audio');
+
+        function playRandomLaugh() {
+          const minDelay = 5000;  // 5 seconds
+          const maxDelay = 12000; // 12 seconds
+          const nextLaugh = Math.floor(Math.random() * (maxDelay - minDelay + 1)) + minDelay;
+
+          // Play the sound
+          laughSound.components.sound.playSound();
+
+          // Schedule the next one
+          setTimeout(playRandomLaugh, nextLaugh);
+        }
+
+        // Start after slight delay
+        setTimeout(playRandomLaugh, 4000);
+      });
+          
       // Move this function outside <a-scene> and inside global scope
       function startMusic() {
         const villageAmb = document.querySelector('#ambience');
