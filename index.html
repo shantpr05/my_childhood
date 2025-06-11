@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Na Paata Gramam - Scene 1</title>
+    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+    <script src="https://cdn.rawgit.com/jeromeetienne/ar.js/2.0.0/aframe/build/aframe-ar.min.js"></script>
+  </head>
+  <button onclick="startMusic()" style="position: absolute; top: 10px; left: 10px; z-index: 999;">Start Scene</button>
+  <body>
+    <a-scene embedded arjs="sourceType: webcam;" style="position: absolute; top: 60px; left: 0; right: 0; bottom: 0;">
+      <!-- AUDIO -->
+      <a-assets>
+        <audio id="villageAmb" src="assets/audio/village_ambience.mp3"></audio>
+        <audio id="fluteLoop" src="assets/audio/indian_flute_loop.mp3"></audio>
+        <audio id="swingCreak" src="assets/audio/swing_creak.mp3"></audio>
+
+        <a-asset-item id="birdModel" src="assets/birds.glb"></a-asset-item>
+        <img id="templeImg" src="assets/temple.png">
+        <a-asset-item id="dog-obj" src="assets/dog/dog.obj"></a-asset-item>
+        <a-asset-item id="dog-mtl" src="assets/dog/dog.mtl"></a-asset-item>
+        <a-asset-item id="grassModel" src="assets/patch_of_grass.glb"></a-asset-item>
+        <a-asset-item id="palm-obj" src="assets/Palm_Tree/10446_Palm_Tree_v1_L3.123c0a37e64c-4659-4136-a23d-059cbcde3ecd/10446_Palm_Tree_v1_max2010_iteration-2.obj"></a-asset-item>
+        <a-asset-item id="palm-mtl" src="assets/Palm_Tree/10446_Palm_Tree_v1_L3.123c0a37e64c-4659-4136-a23d-059cbcde3ecd/10446_Palm_Tree_v1_max2010_iteration-2.mtl"></a-asset-item>
+        <a-asset-item id="kiteModel" src="assets/kite_festival.glb"></a-asset-item>
+                <a-asset-item id="pinwheelModel" src="assets/pinwheel.glb"></a-asset-item>
+
+      </a-assets>
+
+      <!-- SOUND ENTITIES -->
+      <a-entity id="ambience" sound="src: #villageAmb; autoplay: true; loop: true; volume: 0.8"></a-entity>
+      <a-entity id="flute" sound="src: #fluteLoop; autoplay: true; loop: true; volume: 0.2"></a-entity>
+
+      <!-- SKY & GROUND -->
+      <a-sky color="#cceeff"></a-sky>
+      <a-plane rotation="-90 0 0" width="20" height="20" color="#7BC8A4"></a-plane>
+      
+      <!-- HOUSE -->
+      <a-box position="0 1 -5" width="3" height="2" depth="3" color="#ffcc99"></a-box>
+      <a-cone position="0 2.5 -5" radius-bottom="2" height="1" color="#cc3300"></a-cone>
+      <a-box position="0 0.6 -3.51" width="0.8" height="1.2" depth="0.05" color="#8B4513"></a-box>
+      <a-box position="0.9 1.6 -3.51" width="0.6" height="0.6" depth="0.05" color="#3498db"></a-box>
+
+      <!-- PALM TREE -->
+      <a-obj-model src="#palm-obj" mtl="#palm-mtl"
+             position="2 0 -5"
+             rotation="-90 0 0"
+             scale="0.006 0.006 0.006"></a-obj-model>
+
+      <!-- TEMPLE -->
+      <a-plane src="#templeImg"
+           position="6 1.5 -3"
+           width="3"
+           height="2"
+           rotation="0 -20 0">
+      </a-plane>
+
+      <!-- KITES FESTIVAL -->
+      <a-entity gltf-model="#kiteModel"
+          position="-3.2 0.1 -4.7"
+          scale="0.4 0.4 0.4"
+          rotation="0 -90 0">
+      </a-entity>
+
+
+      <!-- TREE & SWING -->
+      <a-cylinder position="-3 1 -5" radius="0.3" height="2" color="#8B4513"></a-cylinder>
+      <a-sphere position="-3 2.5 -5" radius="1.2" color="#228B22"></a-sphere>
+
+      <a-entity id="swing-group" class="clickable"
+                position="-3 2.0 -4.3"
+                animation="property: rotation; from: -10 0 0; to: 10 0 0; dir: alternate; dur: 1500; loop: true; easing: easeInOutSine"
+                sound="src: #swingCreak; on: click">
+        <a-cylinder position="-0.15 0 0" radius="0.02" height="2.2" color="#d2b48c"></a-cylinder>
+        <a-cylinder position="0.15 0 0" radius="0.02" height="2.2" color="#d2b48c"></a-cylinder>
+        <a-box position="0 -1.1 0" width="0.6" height="0.05" depth="0.3" color="#654321"></a-box>
+        <a-cylinder position="0 -0.85 0" radius="0.08" height="0.3" color="#f08080"></a-cylinder>
+        <a-sphere position="0 -0.6 0" radius="0.09" color="#ffdbac"></a-sphere>
+        <a-cylinder position="-0.05 -1.03 0.05" radius="0.02" height="0.2" color="#1e90ff" rotation="90 0 0"></a-cylinder>
+        <a-cylinder position="0.05 -1.05 0.05" radius="0.02" height="0.2" color="#1e90ff" rotation="90 0 0"></a-cylinder>
+        <a-cylinder position="-0.12 -0.7 0" radius="0.015" height="0.25" rotation="0 0 45" color="#ffdbac"></a-cylinder>
+        <a-cylinder position="0.12 -0.7 0" radius="0.015" height="0.25" rotation="0 0 -45" color="#ffdbac"></a-cylinder>
+      </a-entity>
+
+      <!-- DOG -->
+      <a-obj-model src="#dog-obj" mtl="#dog-mtl"
+             position="-2.5 0 -4.9"
+             scale="0.02 0.02 0.02"
+             rotation="-90 0 0">
+      </a-obj-model>
+
+      <!-- STANDING KID NEAR SWING -->
+      <a-entity position="-4 0 -4.9">
+        <a-cylinder radius="0.1" height="0.5" color="#f4a261" position="0 0.45 0"></a-cylinder>
+        <a-sphere radius="0.12" color="#ffdbac" position="0 0.82 0"></a-sphere>
+        <a-cylinder radius="0.02" height="0.3" color="#ffdbac" position="-0.15 0.7 0" rotation="0 0 45"></a-cylinder>
+        <a-cylinder radius="0.02" height="0.3" color="#ffdbac" position="0.15 0.7 0" rotation="0 0 -45"></a-cylinder>
+        <a-cylinder radius="0.025" height="0.3" color="#1e90ff" position="-0.05 0.15 0"></a-cylinder>
+        <a-cylinder radius="0.025" height="0.3" color="#1e90ff" position="0.05 0.15 0"></a-cylinder>
+        <a-entity gltf-model="#pinwheelModel" position="-0.20 0.7 0" scale="1.5 1.5 1.5" rotation="0 0 0"></a-entity>
+      </a-entity>
+
+      <!-- GRASS MODEL -->
+      <a-entity gltf-model="#grassModel"
+          position="-6 0 -4"
+          scale="0.02 0.02 0.02">
+      </a-entity>
+      
+      <!-- MEMORY TEXT -->
+      <a-plane position="-2 3 -5.01" width="6" height="1" color="#fff" opacity="0.7" visible="false" id="text-bg"></a-plane>
+
+      <a-text id="swing-text"
+              value="Every evening, this swing carried our laughter into the sky."
+              position="-2 3 -5"
+              color="#000" visible="false" width="6">
+      </a-text>
+
+      <!-- BUTTERFLY -->
+      <a-entity position="-6 2 -4">
+        <a-plane color="#ffaaff" width="0.1" height="0.2" position="-0.05 0 0" 
+                animation="property: rotation; from: 0 0 0; to: 0 0 20; dir: alternate; dur: 300; loop: true;"></a-plane>
+        <a-plane color="#ffaaff" width="0.1" height="0.2" position="0.05 0 0"
+                animation="property: rotation; from: 0 0 0; to: 0 0 -20; dir: alternate; dur: 300; loop: true;"></a-plane>
+      </a-entity>
+
+      <!-- FLYING BIRD -->
+      <a-entity gltf-model="#birdModel"
+                position="-10 5 -10"
+                animation="property: position; from: -10 5 -10; to: 10 5 -10; dur: 10000; loop: true">
+      </a-entity>
+
+      <!-- KITE -->
+      <a-plane color="#ff0000" width="0.3" height="0.3"
+               position="1 4 6" rotation="0 0 45"
+               animation="property: position; from: 1 4 -6; to: 1.5 4.2 -6; dir: alternate; dur: 2000; loop: true">
+      </a-plane>
+
+      <!-- CAMERA -->
+      <a-entity camera look-controls wasd-controls position="0 1.6 0">
+        <a-entity cursor="fuse: false; rayOrigin: mouse"
+            raycaster="objects: .clickable"
+            position="0 0 -1"
+            geometry="primitive: ring; radiusInner: 0.01; radiusOuter: 0.02"
+            material="color: black; shader: flat">
+        </a-entity>
+      </a-entity>
+
+
+      <!-- LIGHTING -->
+      <a-entity light="type: ambient; intensity: 0.6"></a-entity>
+      <a-entity light="type: directional; intensity: 0.8" position="1 3 1"></a-entity>
+
+      <!-- INTERACTION SCRIPT -->
+      <script>
+        const swing = document.querySelector('#swing-group');
+        const text = document.querySelector('#swing-text');
+
+        swing.addEventListener('click', () => {
+          text.setAttribute('visible', 'true');
+        });
+      </script>
+
+      <!-- SCENE 2: KIDS PLAYING HIDE AND SEEK -->
+
+      <!-- Group of kids running around -->
+      <a-entity position="0 0 4">
+        <!-- Kid 1 running left to right -->
+        <a-entity position="-2 0 -5" 
+                  animation="property: position; from: -2 0 -5; to: 1 0 -5; dur: 4000; loop: true">
+          <a-cylinder radius="0.08" height="0.5" color="#ffd700" position="0 0.25 0"></a-cylinder>
+          <a-box width="0.15" height="0.15" depth="0.1" color="#ff69b4" position="0 0.6 0"></a-box>
+          <a-sphere radius="0.1" color="#ffdbac" position="0 0.8 0"></a-sphere>
+        </a-entity>
+
+        <!-- Kid 2 running right to left -->
+        <a-entity position="2 0 -4.5" 
+                  animation="property: position; from: 2 0 -4.5; to: -1.5 0 -4.5; dur: 4500; loop: true">
+          <a-cylinder radius="0.08" height="0.5" color="#87cefa" position="0 0.25 0"></a-cylinder>
+          <a-box width="0.15" height="0.15" depth="0.1" color="#ff6347" position="0 0.6 0"></a-box>
+          <a-sphere radius="0.1" color="#ffdbac" position="0 0.8 0"></a-sphere>
+        </a-entity>
+
+        <!-- Kid 3 running diagonally -->
+        <a-entity position="-1 0 -4" 
+                  animation="property: position; from: -1 0 -4; to: 1 0 -5; dur: 5000; loop: true">
+          <a-cylinder radius="0.08" height="0.5" color="#32cd32" position="0 0.25 0"></a-cylinder>
+          <a-box width="0.15" height="0.15" depth="0.1" color="#9370db" position="0 0.6 0"></a-box>
+          <a-sphere radius="0.1" color="#ffdbac" position="0 0.8 0"></a-sphere>
+        </a-entity>
+      </a-entity>  
+      
+      <script>
+        function startMusic() {
+          const villageAmb = document.querySelector('#ambience');
+          const flute = document.querySelector('#flute');
+          villageAmb.components.sound.playSound();
+          flute.components.sound.playSound();
+        }
+
+        const bg = document.querySelector('#text-bg');
+        swing.addEventListener('click', () => {
+          text.setAttribute('visible', 'true');
+          bg.setAttribute('visible', 'true');
+        });
+
+       </script>    
+    </a-scene>    
+  </body>
+</html>
