@@ -6,8 +6,53 @@
     <!-- <script src="https://cdn.rawgit.com/jeromeetienne/ar.js/2.0.0/aframe/build/aframe-ar.min.js"></script> -->
 
   </head>
+    <style>
+      #instruction-box {
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        background-color: rgba(255, 255, 255, 0.85);
+        color: #000;
+        padding: 12px;
+        border-radius: 8px;
+        font-family: Arial, sans-serif;
+        font-size: 13px;
+        z-index: 999;
+        max-width: 220px;
+      }
+
+      #instruction-box h4 {
+        margin: 0 0 6px 0;
+        font-size: 14px;
+      }
+
+      #instruction-box ul {
+        margin: 0;
+        padding-left: 16px;
+      }
+
+      #instruction-box li {
+        margin-bottom: 4px;
+        line-height: 1.3em;
+      }
+    </style>
+
   <button onclick="startMusic()" style="position: absolute; top: 10px; left: 10px; z-index: 999;">Start Scene</button>
   <body>
+    <div id="instruction-box">
+      <h4>How to Interact:</h4>
+      <ul>
+        <li>▶️ Click <strong>Start Scene</strong> (top left) to begin scene</li>
+        <li>🎠 Click the <strong>swing</strong> to relive joyful evenings</li>
+        <li>🏯 Tap the <strong>temple</strong> for bells & memories</li>
+        <li>🐕 Click the <strong>dog</strong> to hear Bujji bark!</li>
+        <li>🎏 Spin the <strong>pinwheel</strong> near the kid</li>
+        <li>🏃‍♀️ Tap a <strong>kid</strong> to hear laughter</li>
+        <li>🌿 Click the <strong>grass</strong> to recall fresh mornings</li>
+        <li>🪁 Tap a <strong>kite</strong> for festival joy</li>
+      </ul>
+    </div>
+
     <a-scene>
       <!-- AUDIO -->
       <a-assets>
@@ -33,7 +78,7 @@
       </a-assets>
 
       <!-- SOUND ENTITIES -->
-      <a-entity id="ambience" sound="src: #villageAmb; autoplay: true; loop: true; volume: 0.8"></a-entity>
+      <a-entity id="ambience" sound="src: #villageAmb; autoplay: true; loop: true; volume: 1.8"></a-entity>
       <a-entity id="flute" sound="src: #fluteLoop; autoplay: true; loop: true; volume: 0.2"></a-entity>
       <a-entity id="temple-bell-sound" sound="src: #templeBell; autoplay: false; volume: 1.0"></a-entity>
       <a-entity id="dog-sound" sound="src: #dogBark; autoplay: false; volume: 1.0"></a-entity>
