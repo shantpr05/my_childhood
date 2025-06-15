@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>My grandparents village</title>
+    <title>Na Paata Gramam</title>
     <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
     <!-- <script src="https://cdn.rawgit.com/jeromeetienne/ar.js/2.0.0/aframe/build/aframe-ar.min.js"></script> -->
 
@@ -107,7 +107,10 @@
       <a-obj-model src="#palm-obj" mtl="#palm-mtl"
              position="2 0 -4"
              rotation="-90 0 0"
-             scale="0.006 0.006 0.006"></a-obj-model>
+             scale="0.006 0.006 0.006"
+             animation="property: rotation; dir: alternate; dur: 4000; easing: easeInOutSine;
+                        from: -90 0 4; to: -90 0 -4; loop: true">
+      </a-obj-model>
 
       <!-- TEMPLE -->
       <a-plane src="#templeImg"
